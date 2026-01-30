@@ -47,7 +47,7 @@ const Services = () => {
           <span className="text-accent font-semibold text-sm uppercase tracking-wider">
             Our Services
           </span>
-          <h2 className="mt-4 font-display text-3xl md:text-5xl font-bold text-foreground">
+          <h2 className="mt-4 font-display text-3xl md:text-4xl font-bold text-foreground">
             Everything you need to succeed online
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">

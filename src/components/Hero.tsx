@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="relative min-h-screen hero-bg flex items-center justify-center overflow-hidden">
       {/* Background decoration */}
@@ -37,11 +44,14 @@ const Hero = () => {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up opacity-0 delay-300">
             <Button
               size="lg"
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-8 group"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-8 group flex items-center justify-center"
+              onClick={scrollToContact}
             >
-              <a href="#contact">Start a project</a>
+              Start a project
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
+
+            {/* Example secondary button (optional) */}
             {/* <Button
               variant="ghost"
               size="lg"

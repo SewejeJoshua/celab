@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Celablogo from "@/assets/images/celab-logo.jpeg";
-import {Link} from "react-router-dom"; 
-
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -17,12 +15,18 @@ const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+    setIsMobileMenuOpen(false); // close mobile menu
+  };
 
   return (
     <nav
@@ -37,36 +41,41 @@ const Navigation = () => {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-              <img src={Celablogo} className="rounded-sm"/>
+              <img src={Celablogo} className="rounded-sm" alt="Logo"/>
             </div>
-            <span className={`font-display font-bold text-xl ${isScrolled ? 'text-foreground' : 'text-primary-foreground'}`}>
-              celab
+            <span
+              className={`font-display font-bold text-xl ${
+                isScrolled ? "text-foreground" : "text-primary-foreground"
+              }`}
+            >
+              CelabTech
             </span>
           </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-end gap-8">
             {navLinks.map((link) => (
-              <a
+              <button
                 key={link.label}
-                href={link.href}
+                onClick={() => scrollToSection(link.href.substring(1))}
                 className={`text-sm font-medium transition-colors hover:text-accent ${
                   isScrolled ? "text-muted-foreground" : "text-primary-foreground/80"
                 }`}
               >
                 {link.label}
-              </a>
+              </button>
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* Desktop CTA Button */}
           <div className="hidden md:block">
-            <Button 
+            <Button
               variant={isScrolled ? "default" : "secondary"}
               size="sm"
               className="font-medium"
+              onClick={() => scrollToSection("contact")}
             >
-              <a href="#contact">Get Started</a>
+              Get Started
             </Button>
           </div>
 
@@ -76,9 +85,17 @@ const Navigation = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <X className={`w-6 h-6 ${isScrolled ? 'text-foreground' : 'text-primary-foreground'}`} />
+              <X
+                className={`w-6 h-6 ${
+                  isScrolled ? "text-foreground" : "text-primary-foreground"
+                }`}
+              />
             ) : (
-              <Menu className={`w-6 h-6 ${isScrolled ? 'text-foreground' : 'text-primary-foreground'}`} />
+              <Menu
+                className={`w-6 h-6 ${
+                  isScrolled ? "text-foreground" : "text-primary-foreground"
+                }`}
+              />
             )}
           </button>
         </div>
@@ -88,16 +105,20 @@ const Navigation = () => {
           <div className="md:hidden bg-background border-t border-border animate-fade-in">
             <div className="py-4 space-y-4">
               {navLinks.map((link) => (
-                <a
+                <button
                   key={link.label}
-                  href={link.href}
-                  className="block text-foreground font-medium py-2 hover:text-accent transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => scrollToSection(link.href.substring(1))}
+                  className="block text-foreground font-medium py-2 hover:text-accent transition-colors w-full text-left"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
-              <Button className="w-full mt-4"><a href="#contact">Get Started</a></Button>
+              <Button
+                className="w-full mt-4"
+                onClick={() => scrollToSection("contact")}
+              >
+                Get Started
+              </Button>
             </div>
           </div>
         )}

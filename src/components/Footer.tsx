@@ -23,7 +23,7 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Twitter, href: "https://x.com/CelabTech", label: "Twitter" },
-  { icon: Facebook, href: "facebook:https://www.facebook.com/profile.php?id=61586327231653", label: "Facebook" },
+  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61586327231653", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/celabtech?utm_source=qr&igsh=YXhnbm1oOHJ6N3B1", label: "Instagram" },
   // { icon: Github, href: "https://github.com/celabtech", label: "GitHub" },
 ];
@@ -39,7 +39,7 @@ const Footer = () => {
               <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
                 <img src={Celab} className="rounded-sm"/>
               </div>
-              <span className="font-display font-bold text-xl">celab</span>
+              <span className="font-display font-bold text-xl">CelabTech</span>
             </div>
             <p className="text-primary-foreground/70 max-w-sm leading-relaxed">
               Crafting digital experiences that matter. We help ambitious brands 

@@ -42,8 +42,8 @@ const Team = () => {
           <span className="text-accent font-semibold text-sm uppercase tracking-wider">
             Our Team
           </span>
-          <h2 className="mt-4 font-display text-3xl md:text-5xl font-bold text-foreground">
-            Meet the people behind Celab
+          <h2 className="mt-4 font-display text-2xl md:text-4xl font-bold text-foreground">
+            Meet the people behind CelabTech
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
             A diverse team of experts passionate about creating exceptional digital experiences.
