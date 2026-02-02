@@ -23,7 +23,7 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Twitter, href: "https://x.com/CelabTech", label: "Twitter" },
-  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61586327231653", label: "Facebook" },
+  { icon: Facebook, href: "https://web.facebook.com/profile.php?id=61586342829016", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/celabtech?utm_source=qr&igsh=YXhnbm1oOHJ6N3B1", label: "Instagram" },
   // { icon: Github, href: "https://github.com/celabtech", label: "GitHub" },
 ];
@@ -111,7 +111,7 @@ const Footer = () => {
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-primary-foreground/60 text-sm">
-            © {new Date().getFullYear()} celab. All rights reserved.
+            © {new Date().getFullYear()} CelabTech. All rights reserved.
           </p>
           
         </div>

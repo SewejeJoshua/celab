@@ -40,7 +40,7 @@ const Contact = () => {
     };
 
     try {
-      const response = await fetch("https://your-api-endpoint.com/contact", {
+      const response = await fetch(`${import.meta.env.VITE_CELAB_API}/contact/reach/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
