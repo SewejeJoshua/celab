@@ -1,35 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const fetchedOnce = useRef(false);
+
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  // Fetch messages
-  const fetchMessages = async (authToken: string) => {
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const [search, setSearch] = useState("");
+
+  const fetchMessages = async (
+    authToken: string,
+    pageNum = 1,
+    query = ""
+  ) => {
+    if (loading) return;
     setLoading(true);
     setError(null);
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_CELAB_API}/contact/admin/`,
+        `${import.meta.env.VITE_CELAB_API}/contact/admin/?page=${pageNum}&search=${query}`,
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${authToken}`, // ✅ required by DRF
+            Authorization: `Token ${authToken}`,
           },
         }
       );
 
-      if (response.status === 401 || response.status === 403) {
-        throw new Error("Not authorized. Please login.");
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}`);
       }
 
       const data = await response.json();
-      setMessages(data);
+
+      // 🔥 DRF-aligned
+      setMessages(data.results);
+      setCount(data.count);
+      setPage(pageNum);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -37,10 +50,11 @@ const Admin = () => {
     }
   };
 
-  // Load token and fetch messages
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    if (fetchedOnce.current) return;
+    fetchedOnce.current = true;
 
+    const storedToken = localStorage.getItem("token");
     if (!storedToken) {
       navigate("/login");
       return;
@@ -50,53 +64,108 @@ const Admin = () => {
     fetchMessages(storedToken);
   }, [navigate]);
 
-  if (!token) return null; // wait until token is ready
+  // 🔍 Debounce search
+  useEffect(() => {
+    if (!token) return;
+
+    const timer = setTimeout(() => {
+      fetchMessages(token, 1, search);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const totalPages = Math.ceil(count / 5);
+
+  // 🗑 Delete message
+  const deleteMessage = async (id: number) => {
+    if (!token || !confirm("Delete this message?")) return;
+
+    await fetch(
+      `${import.meta.env.VITE_CELAB_API}/contact/admin/${id}/`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Token ${token}` },
+      }
+    );
+
+    fetchMessages(token, page, search);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
-          <button
-            onClick={() => token && fetchMessages(token)}
-            className="px-4 py-2 bg-black text-white rounded hover:opacity-80 transition"
-          >
-            Refresh
-          </button>
+      <div className="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow">
+
+        <div className="flex justify-between mb-4">
+          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+          <input
+            placeholder="Search messages…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border px-3 py-2 rounded"
+          />
         </div>
 
-        <div className="bg-white rounded-xl shadow-md p-6">
-          {loading && <p className="text-gray-500 text-center">Loading messages...</p>}
-          {error && <p className="text-red-600 text-center">{error}</p>}
-          {!loading && !error && messages.length === 0 && (
-            <p className="text-gray-500 text-center">No messages found.</p>
-          )}
-          {!loading && !error && messages.length > 0 && (
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-gray-100 text-left text-sm uppercase text-gray-600">
-                    <th className="p-3">Name</th>
-                    <th className="p-3">Email</th>
-                    <th className="p-3">Message</th>
-                    <th className="p-3">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {messages.map((msg) => (
-                    <tr key={msg.id} className="border-t hover:bg-gray-50 transition">
-                      <td className="p-3 font-medium text-gray-800">{msg.name}</td>
-                      <td className="p-3 text-gray-600">{msg.email}</td>
-                      <td className="p-3 text-gray-700 max-w-md truncate">{msg.message}</td>
-                      <td className="p-3 text-gray-500 text-sm">
-                        {msg.createdAt ? new Date(msg.createdAt).toLocaleDateString() : "—"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+        {loading && <p>Loading…</p>}
+        {error && <p className="text-red-600">{error}</p>}
+
+        <table className="w-full">
+          <thead>
+            <tr className="border-b text-left">
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {messages.map((msg) => (
+              <tr key={msg.id} className="border-b">
+                <td>{msg.name}</td>
+                <td>{msg.email}</td>
+                <td className="truncate max-w-md">{msg.message}</td>
+                <td className="space-x-2">
+                  <button
+                    className="text-blue-600"
+                    onClick={() =>
+                      window.location.href = `mailto:${msg.email}`
+                    }
+                  >
+                    Reply
+                  </button>
+
+                  <button
+                    className="text-red-600"
+                    onClick={() => deleteMessage(msg.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Pagination */}
+        <div className="flex justify-between mt-4">
+          <button
+            disabled={page === 1}
+            onClick={() => fetchMessages(token!, page - 1, search)}
+          >
+            Previous
+          </button>
+
+          <span>
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => fetchMessages(token!, page + 1, search)}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
