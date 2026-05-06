@@ -4,14 +4,15 @@ import { ExternalLink } from "lucide-react";
 
 const projects = [
   {
-    title: "OFAS",
-    category: "Healthcare",
-    status: "Currently Building",
-    desc: "Comprehensive asthma patient management platform featuring inhaler tracking, trigger logging, peak flow monitoring, and emergency action plans for improved patient outcomes.",
-    tech: ["React Native", "Django", "PostgreSQL", "Figma"],
-    type: "Mobile & Web",
-    link: "https://ofas.onrender.com/",
-    highlight: true,
+   
+
+    title: "EarlyChildhood",
+    category: "Education",
+    status: "Deployed",
+    desc: "A digital platform focused on early childhood development, enabling structured learning, child data management, and seamless interaction between caregivers and administrators.",
+    tech: ["React", "TypeScript", "API Integration"],
+    type: "Web App",
+    link: "https://early-childhood.onrender.com/",
   },
   {
     title: "Comfort Homes CRM",
@@ -32,13 +33,14 @@ const projects = [
     link: "https://play.google.com/store/apps/details?id=com.qiimeet",
   },
   {
-    title: "EarlyChildhood",
-    category: "Education",
-    status: "Deployed",
-    desc: "A digital platform focused on early childhood development, enabling structured learning, child data management, and seamless interaction between caregivers and administrators.",
-    tech: ["React", "TypeScript", "API Integration"],
-    type: "Web App",
-    link: "https://early-childhood.onrender.com/",
+     title: "OFAS",
+    category: "Healthcare",
+    status: "Currently Building",
+    desc: "Comprehensive asthma patient management platform featuring inhaler tracking, trigger logging, peak flow monitoring, and emergency action plans for improved patient outcomes.",
+    tech: ["React Native", "Django", "PostgreSQL", "Figma"],
+    type: "Mobile & Web",
+    link: "https://ofas.onrender.com/",
+    highlight: true,
   },
   {
     title: "MedConnect",
