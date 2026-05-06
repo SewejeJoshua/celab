@@ -7,6 +7,8 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer"; 
 import Admin  from "@/components/AdminCLT";
 import AdminLogin from "@/components/Login";
+import Projects from "@/components/Projects";
+import Stacks from "@/components/Stacks";
 
 const Index = () => {
   return (
@@ -15,7 +17,9 @@ const Index = () => {
       <Hero />
       <About />
       <Services />
-      <Team />
+      {/* <Team /> */}
+      <Projects />
+      <Stacks />
       <Contact />
       {/* <Admin /> */}
       <Footer />

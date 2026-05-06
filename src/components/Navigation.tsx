@@ -5,8 +5,9 @@ import Celablogo from "@/assets/images/celab-logo.jpeg";
 
 const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Team", href: "#team" },
+  { label: "Capabilities", href: "#services" },
+  // { label: "Team", href: "#team" }, 
+  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 

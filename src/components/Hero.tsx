@@ -36,8 +36,7 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="mt-6 text-lg md:text-xl text-primary-foreground/70 max-w-2xl mx-auto leading-relaxed animate-fade-up opacity-0 delay-200">
-            A forward-thinking agency helping ambitious brands transform their 
-            digital presence through strategic design and innovative technology.
+            We are an agency that helps ambitious brands design and build high-performing digital systems that drive growth, increase revenue, and position them to scale with confidence.
           </p>
 
           {/* CTA Buttons */}
@@ -67,7 +66,7 @@ const Hero = () => {
             {[
               { value: "15+", label: "Projects Delivered" },
               { value: "10+", label: "Happy Clients" },
-              { value: "10", label: "Years Experience" },
+              { value: "6", label: "Years Experience" },
               { value: "99%", label: "Client Satisfaction" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">

@@ -4,15 +4,16 @@ import Celab from "@/assets/images/celab-logo.jpeg";
 const footerLinks = {
   company: [
     { label: "About", href: "#about" },
-    { label: "Careers", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Blog", href: "#" },
+    { label: "Capabilities", href: "#services" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", href: "#contact" },
   ],
   services: [
+    { label: "Brand & Identity", href: "#services" },
     { label: "Web Development", href: "#services" },
-    { label: "Mobile Apps", href: "#services" },
-    { label: "Brand Design", href: "#services" },
-    { label: "Consulting", href: "#services" },
+    { label: "Mobile Apps", href: "#services" }, 
+    { label: "E-commerce", href: "#services" },
+    { label: "Cyber Security", href: "#services" },
   ],
   legal: [
     { label: "Privacy Policy", href: "#" },
@@ -45,7 +46,7 @@ const Footer = () => {
               Crafting digital experiences that matter. We help ambitious brands 
               transform their vision into reality.
             </p>
-            <div className="flex gap-4 mt-6">
+            {/* <div className="flex gap-4 mt-6">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -56,7 +57,7 @@ const Footer = () => {
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Links */}
@@ -77,7 +78,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+            <h4 className="font-semibold mb-4">Capabilities</h4>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
