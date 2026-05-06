@@ -17,7 +17,7 @@ const Hero = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pt-20 pb-20">
+      <div className="container mx-auto px-6 relative z-10 pt-20 pb-20 md-pb">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <div className="animate-fade-up opacity-0">
